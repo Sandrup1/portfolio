@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Portfolio</title>
+  <style>
+    :root {
+      --bg: #fff;
+      --text: #000;
+    }
+    [data-theme="dark"] {
+      --bg: #121212;
+      --text: #fff;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 20px;
+    }
+    header, section, footer {
+      margin-bottom: 2rem;
+    }
+    .skills, .projects {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .project {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      border-radius: 5px;
+      width: 45%;
+    }
+    .contact input, .contact textarea {
+      display: block;
+      width: 100%;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+    .theme-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+    }
+    .hidden {
+      display: none;
+    }
+    @media (max-width: 600px) {
+      .project {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+  <header>
+    <h1 id="name"></h1>
+    <p>Frontend Developer</p>
+  </header>
+
+  <section class="about">
+    <h2>About Me</h2>
+    <p>Hi! I'm a passionate web developer who loves building responsive and interactive websites.</p>
+    <button onclick="toggleMoreInfo()">Read More</button>
+    <p id="more-info" class="hidden">I enjoy learning new technologies and creating meaningful digital experiences. I'm currently exploring more advanced JavaScript frameworks and working on personal projects to sharpen my skills.</p>
+  </section>
+
+  <section class="skills">
+    <h2>Skills</h2>
+    <ul>
+      <li>HTML</li>
+      <li>CSS</li>
+      <li>JavaScript</li>
+      <li>Git & GitHub</li>
+    </ul>
+  </section>
+
+  <section class="projects">
+    <h2>Projects</h2>
+    <div id="project-container"></div>
+  </section>
+
+  <section class="contact">
+    <h2>Contact Me</h2>
+    <form onsubmit="return validateForm()">
+      <input type="text" id="username" placeholder="Name" required />
+      <input type="email" id="email" placeholder="Email" required />
+      <textarea id="message" placeholder="Your message"></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+
+  <footer>
+    <p id="datetime"></p>
+  </footer>
+
+  <script>
+    // Typing animation
+    const nameText = "Hello, I'm Sandrup";
+    let i = 0;
+    function typeEffect() {
+      if (i < nameText.length) {
+        document.getElementById("name").innerHTML += nameText.charAt(i);
+        i++;
+        setTimeout(typeEffect, 100);
+      }
+    }
+    typeEffect();
+
+    // Dynamic date
+    document.getElementById("datetime").innerText = new Date().toLocaleString();
+
+    // Theme toggle
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute("data-theme");
+      document.documentElement.setAttribute("data-theme", currentTheme === "dark" ? "light" : "dark");
+    }
+
+    // Project loader
+    const projects = [
+      { title: "Portfolio Website", desc: "A personal website built using HTML, CSS, and JS", link: "#" },
+      { title: "Review Radar Web App", desc: "A movie review and rating web application", link: "#" },
+    ];
+    const projectContainer = document.getElementById("project-container");
+    projects.forEach(p => {
+      projectContainer.innerHTML += `<div class='project'><h3>${p.title}</h3><p>${p.desc}</p><a href='${p.link}'>View</a></div>`;
+    });
+
+    // Form validation
+    function validateForm() {
+      const name = document.getElementById("username").value;
+      const email = document.getElementById("email").value;
+      if (!name || !email.includes("@")) {
+        alert("Please fill out the form correctly.");
+        return false;
+      }
+      alert("Form submitted!");
+      return true;
+    }
+
+    // Show/hide content
+    function toggleMoreInfo() {
+      const moreInfo = document.getElementById("more-info");
+      moreInfo.classList.toggle("hidden");
+    }
+  </script>
+</body>
+</html>
